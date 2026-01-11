@@ -19,7 +19,7 @@ export async function requireAuth(request: Request, env: Env): Promise<AuthConte
   if (!initData) {
     return errorJson('AUTH_REQUIRED', 'Missing Telegram initData', 401);
   }
-  if (!verifyTelegramInitData(initData, env.TELEGRAM_BOT_TOKEN)) {
+  if (!(await verifyTelegramInitData(initData, env.TELEGRAM_BOT_TOKEN))) {
     return errorJson('AUTH_INVALID', 'Invalid Telegram initData', 401);
   }
   const data = parseInitData(initData);
