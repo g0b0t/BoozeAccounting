@@ -1,4 +1,5 @@
 import { errorJson } from '../functions/_lib/response';
+import type { Fetcher } from '@cloudflare/workers-types';
 import type { Env as AuthEnv } from '../functions/_lib/auth';
 import { onRequestPost as authPost } from '../functions/api/auth';
 import { onRequestGet as crewGet, onRequestPost as crewPost } from '../functions/api/crew';
