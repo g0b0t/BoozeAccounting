@@ -1,8 +1,8 @@
-name = "booze-accounting"
+name = "boozeaccounting"
 compatibility_date = "2024-09-01"
 
 kv_namespaces = [
-  { binding = "APP_KV", id = "YOUR_KV_ID", preview_id = "YOUR_KV_PREVIEW_ID" }
+  { binding = "APP_KV", id = "9bf24f0a7e274730993b0ef58a09c2e1", preview_id = "d2139cb0244349a6bcd91a565dd4a88f" }
 ]
 
 [vars]
