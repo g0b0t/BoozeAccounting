@@ -5,8 +5,9 @@ import { getIndex, getJson } from '../../../../_lib/kv';
 import { ethanolGramsForEntry } from '../../../../../shared/promille';
 import { oneYearAgo } from '../../../../_lib/dates';
 import { getMemberRole } from '../../../../_lib/crew';
+import type { Env } from '../../../../_lib/auth';
 
-export const onRequestGet: PagesFunction = async ({ request, env, params }) => {
+export const onRequestGet: PagesFunction<Env> = async ({ request, env, params }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;

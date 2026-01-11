@@ -6,8 +6,9 @@ import { requireNumber, requireString } from '../../../_lib/validate';
 import { getIndex, getJson, putJson, pushToIndex, removeFromIndex } from '../../../_lib/kv';
 import { formatDateKey } from '../../../_lib/dates';
 import { getMemberRole } from '../../../_lib/crew';
+import type { Env } from '../../../_lib/auth';
 
-export const onRequestPost: PagesFunction = async ({ request, env, params }) => {
+export const onRequestPost: PagesFunction<Env> = async ({ request, env, params }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;
@@ -48,7 +49,7 @@ export const onRequestPost: PagesFunction = async ({ request, env, params }) => 
   }
 };
 
-export const onRequestGet: PagesFunction = async ({ request, env, params }) => {
+export const onRequestGet: PagesFunction<Env> = async ({ request, env, params }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;
@@ -78,7 +79,7 @@ export const onRequestGet: PagesFunction = async ({ request, env, params }) => {
   return json({ entries });
 };
 
-export const onRequestDelete: PagesFunction = async ({ request, env, params }) => {
+export const onRequestDelete: PagesFunction<Env> = async ({ request, env, params }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;

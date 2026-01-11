@@ -5,10 +5,11 @@ import { errorJson, json } from '../../../../_lib/response';
 import { requireEnum, requireNumber, requireString } from '../../../../_lib/validate';
 import { getJson, putJson } from '../../../../_lib/kv';
 import { requireAdmin } from '../../../../_lib/crew';
+import type { Env } from '../../../../_lib/auth';
 
 const categories = ['BEER', 'CIDER', 'WINE', 'SPIRITS', 'COCKTAIL', 'OTHER'] as const;
 
-export const onRequestPut: PagesFunction = async ({ request, env, params }) => {
+export const onRequestPut: PagesFunction<Env> = async ({ request, env, params }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;

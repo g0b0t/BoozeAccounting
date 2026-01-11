@@ -3,8 +3,9 @@ import { requireAuth } from '../_lib/auth';
 import { readJson } from '../_lib/body';
 import { errorJson, json } from '../_lib/response';
 import { requireEnum, requireNumber } from '../_lib/validate';
+import type { Env } from '../_lib/auth';
 
-export const onRequestGet: PagesFunction = async ({ request, env }) => {
+export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;
@@ -16,7 +17,7 @@ export const onRequestGet: PagesFunction = async ({ request, env }) => {
   return json(profile);
 };
 
-export const onRequestPut: PagesFunction = async ({ request, env }) => {
+export const onRequestPut: PagesFunction<Env> = async ({ request, env }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;
