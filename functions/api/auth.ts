@@ -11,7 +11,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (!initData) {
     return errorJson('AUTH_REQUIRED', 'Missing initData', 401);
   }
-  if (!verifyTelegramInitData(initData, env.TELEGRAM_BOT_TOKEN)) {
+  if (!(await verifyTelegramInitData(initData, env.TELEGRAM_BOT_TOKEN))) {
     return errorJson('AUTH_INVALID', 'Invalid initData', 401);
   }
   const data = parseInitData(initData);

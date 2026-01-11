@@ -4,6 +4,7 @@ import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { useAuth } from '../lib/store';
 import { ApiClient } from '../lib/api';
+import type { Crew } from '@shared/types';
 
 export default function CrewChoosePage() {
   const { initData, crews, setAuth } = useAuth();
@@ -15,7 +16,7 @@ export default function CrewChoosePage() {
 
   const createCrew = async () => {
     try {
-      const data = await client.request<{ crew: { crew_id: string; name: string } }>('/api/crew', {
+      const data = await client.request<{ crew: Crew }>('/api/crew', {
         method: 'POST',
         body: JSON.stringify({ name })
       });
@@ -28,7 +29,7 @@ export default function CrewChoosePage() {
 
   const joinCrew = async () => {
     try {
-      const data = await client.request<{ crew: { crew_id: string; name: string } }>('/api/crew/join', {
+      const data = await client.request<{ crew: Crew }>('/api/crew/join', {
         method: 'POST',
         body: JSON.stringify({ invite_code: invite })
       });
