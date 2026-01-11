@@ -6,8 +6,10 @@ import { getJson, putJson } from '../_lib/kv';
 import type { Env } from '../_lib/auth';
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  const header = request.headers.get('Authorization');
+  const initHeader = request.headers.get('X-Telegram-InitData');
   const body = await readJson<{ initData?: string }>(request);
-  const initData = body.initData ?? '';
+  const initData = body.initData ?? (header?.startsWith('tma ') ? header.slice(4) : initHeader) ?? '';
   if (!initData) {
     return errorJson('AUTH_REQUIRED', 'Missing initData', 401);
   }

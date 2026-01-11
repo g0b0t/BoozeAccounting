@@ -17,11 +17,10 @@ export default function GatePage() {
       setError('Откройте приложение внутри Telegram.');
       return;
     }
-    const client = new ApiClient(null);
+    const client = new ApiClient(initData);
     client
       .request<{ user: unknown; crews: unknown[]; hasProfile: boolean }>('/api/auth', {
-        method: 'POST',
-        body: JSON.stringify({ initData })
+        method: 'POST'
       })
       .then((data) => {
         setAuth({
