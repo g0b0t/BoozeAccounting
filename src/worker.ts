@@ -44,7 +44,7 @@ function normalizePath(pathname: string): string {
   return pathname;
 }
 
-async function dispatch(handler: (context: unknown) => Response | Promise<Response>, request: Request, env: WorkerEnv, params: Record<string, string>): Promise<Response> {
+async function dispatch(handler: unknown, request: Request, env: WorkerEnv, params: Record<string, string>): Promise<Response> {
   return (handler as PagesHandler)({ request, env, params });
 }
 
