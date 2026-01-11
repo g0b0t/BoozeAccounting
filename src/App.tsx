@@ -18,7 +18,7 @@ function AppRoutes() {
   }, []);
   useEffect(() => {
     if (location.pathname === '/') {
-      navigate('/gate');
+      navigate(`/gate${location.search}${location.hash}`);
     }
   }, [navigate]);
   return (
