@@ -4,12 +4,13 @@ import { readJson } from '../_lib/body';
 import { errorJson, json } from '../_lib/response';
 import { requireString } from '../_lib/validate';
 import { getJson, putJson, pushToIndex } from '../_lib/kv';
+import type { Env } from '../_lib/auth';
 
 function randomCode(): string {
   return Math.random().toString(36).slice(2, 8).toUpperCase();
 }
 
-export const onRequestPost: PagesFunction = async ({ request, env }) => {
+export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;
@@ -42,7 +43,7 @@ export const onRequestPost: PagesFunction = async ({ request, env }) => {
   }
 };
 
-export const onRequestGet: PagesFunction = async ({ request, env }) => {
+export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;

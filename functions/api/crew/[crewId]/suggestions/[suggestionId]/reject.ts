@@ -4,8 +4,9 @@ import { readJson } from '../../../../../_lib/body';
 import { errorJson, json } from '../../../../../_lib/response';
 import { getJson, putJson, removeFromIndex } from '../../../../../_lib/kv';
 import { requireAdmin } from '../../../../../_lib/crew';
+import type { Env } from '../../../../../_lib/auth';
 
-export const onRequestPost: PagesFunction = async ({ request, env, params }) => {
+export const onRequestPost: PagesFunction<Env> = async ({ request, env, params }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;

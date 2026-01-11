@@ -2,8 +2,9 @@ import type { Crew } from '../../../../shared/types';
 import { requireAuth } from '../../../_lib/auth';
 import { errorJson, json } from '../../../_lib/response';
 import { getMemberRole } from '../../../_lib/crew';
+import type { Env } from '../../../_lib/auth';
 
-export const onRequestGet: PagesFunction = async ({ request, env, params }) => {
+export const onRequestGet: PagesFunction<Env> = async ({ request, env, params }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;

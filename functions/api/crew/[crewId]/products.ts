@@ -5,10 +5,11 @@ import { errorJson, json } from '../../../_lib/response';
 import { requireEnum, requireNumber, requireString } from '../../../_lib/validate';
 import { getIndex, getJson, putJson, pushToIndex } from '../../../_lib/kv';
 import { requireAdmin } from '../../../_lib/crew';
+import type { Env } from '../../../_lib/auth';
 
 const categories = ['BEER', 'CIDER', 'WINE', 'SPIRITS', 'COCKTAIL', 'OTHER'] as const;
 
-export const onRequestGet: PagesFunction = async ({ request, env, params }) => {
+export const onRequestGet: PagesFunction<Env> = async ({ request, env, params }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;
@@ -25,7 +26,7 @@ export const onRequestGet: PagesFunction = async ({ request, env, params }) => {
   return json({ products });
 };
 
-export const onRequestPost: PagesFunction = async ({ request, env, params }) => {
+export const onRequestPost: PagesFunction<Env> = async ({ request, env, params }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;

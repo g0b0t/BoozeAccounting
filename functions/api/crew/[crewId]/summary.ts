@@ -4,10 +4,11 @@ import { errorJson, json } from '../../../_lib/response';
 import { getIndex, getJson } from '../../../_lib/kv';
 import { calculatePromille, modeForPromille } from '../../../../shared/promille';
 import { getMemberRole } from '../../../_lib/crew';
+import type { Env } from '../../../_lib/auth';
 
 const DISCLAIMER = 'Оценка примерная и не является медицинским прибором. Не используйте как доказательство трезвости.';
 
-export const onRequestGet: PagesFunction = async ({ request, env, params }) => {
+export const onRequestGet: PagesFunction<Env> = async ({ request, env, params }) => {
   const auth = await requireAuth(request, env);
   if (auth instanceof Response) {
     return auth;
