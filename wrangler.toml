@@ -7,3 +7,6 @@ kv_namespaces = [
 
 [vars]
 ENV = "production"
+
+[assets]
+directory = "./dist"
