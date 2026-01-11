@@ -8,7 +8,7 @@ export function getTelegramInitData(): string | null {
   const searchParams = new URLSearchParams(window.location.search);
   const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
   const initDataFromUrl = searchParams.get('tgWebAppData') ?? hashParams.get('tgWebAppData');
-  return initDataFromUrl ? decodeURIComponent(initDataFromUrl) : null;
+  return initDataFromUrl ?? null;
 }
 
 export function applyTelegramTheme() {
