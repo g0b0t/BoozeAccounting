@@ -8,7 +8,8 @@ async function hmacSha256(key: Uint8Array, message: string): Promise<Uint8Array>
   if (!subtle) {
     throw new Error('Web Crypto API unavailable');
   }
-  const cryptoKey = await subtle.importKey('raw', key, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const keyBuffer = key.buffer.slice(key.byteOffset, key.byteOffset + key.byteLength);
+  const cryptoKey = await subtle.importKey('raw', keyBuffer, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
   const signature = await subtle.sign('HMAC', cryptoKey, encoder.encode(message));
   return new Uint8Array(signature);
 }
