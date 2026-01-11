@@ -14,6 +14,12 @@ export class ApiClient {
     const response = await fetch(path, { ...options, headers });
     if (!response.ok) {
       const payload = (await response.json().catch(() => null)) as ApiError | null;
+      console.error('API request failed', {
+        url: response.url,
+        status: response.status,
+        statusText: response.statusText,
+        payload
+      });
       const message = payload?.error?.message ?? 'Request failed';
       throw new Error(message);
     }
