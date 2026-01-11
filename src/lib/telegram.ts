@@ -1,6 +1,14 @@
 export function getTelegramInitData(): string | null {
   const tg = (window as Window & { Telegram?: { WebApp?: { initData?: string } } }).Telegram;
-  return tg?.WebApp?.initData ?? null;
+  const directInitData = tg?.WebApp?.initData;
+  if (directInitData) {
+    return directInitData;
+  }
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+  const initDataFromUrl = searchParams.get('tgWebAppData') ?? hashParams.get('tgWebAppData');
+  return initDataFromUrl || null;
 }
 
 export function applyTelegramTheme() {
