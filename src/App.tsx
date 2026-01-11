@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './lib/store';
 import { applyTelegramTheme } from './lib/telegram';
 import GatePage from './pages/GatePage';
@@ -12,17 +12,12 @@ import ProductsAdminPage from './pages/ProductsAdminPage';
 import SuggestionsPage from './pages/SuggestionsPage';
 
 function AppRoutes() {
-  const navigate = useNavigate();
   useEffect(() => {
     applyTelegramTheme();
   }, []);
-  useEffect(() => {
-    if (location.pathname === '/') {
-      navigate('/gate');
-    }
-  }, [navigate]);
   return (
     <Routes>
+      <Route path="/" element={<GatePage />} />
       <Route path="/gate" element={<GatePage />} />
       <Route path="/onboarding/profile" element={<ProfilePage />} />
       <Route path="/crew/choose" element={<CrewChoosePage />} />
