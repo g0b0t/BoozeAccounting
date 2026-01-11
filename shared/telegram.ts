@@ -36,7 +36,7 @@ export async function verifyTelegramInitData(initData: string, botToken: string)
   const sortedKeys = Object.keys(data).sort();
   const dataCheckString = sortedKeys.map((key) => `${key}=${data[key]}`).join('\n');
   try {
-    const secretKey = await hmacSha256(encoder.encode(botToken), 'WebAppData');
+    const secretKey = await hmacSha256(encoder.encode('WebAppData'), botToken);
     const computedHash = await hmacSha256(secretKey, dataCheckString);
     return bytesToHex(computedHash) === hash;
   } catch {
