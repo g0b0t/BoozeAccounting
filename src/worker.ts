@@ -1,5 +1,5 @@
 import { errorJson } from '../functions/_lib/response';
-import type { Fetcher } from '@cloudflare/workers-types';
+import type { EventContext, Fetcher, PagesFunction } from '@cloudflare/workers-types';
 import type { Env as AuthEnv } from '../functions/_lib/auth';
 import { onRequestPost as authPost } from '../functions/api/auth';
 import { onRequestGet as crewGet, onRequestPost as crewPost } from '../functions/api/crew';
@@ -32,11 +32,24 @@ interface WorkerEnv extends AuthEnv {
   ASSETS: Fetcher;
 }
 
-type PagesHandler = (context: {
-  request: Request;
-  env: AuthEnv;
-  params: Record<string, string>;
-}) => Response | Promise<Response>;
+type PagesHandler = PagesFunction<AuthEnv>;
+
+function createContext(
+  request: Request,
+  env: WorkerEnv,
+  params: Record<string, string>
+): EventContext<AuthEnv, string, Record<string, unknown>> {
+  return {
+    request,
+    env,
+    params,
+    data: {},
+    functionPath: new URL(request.url).pathname,
+    waitUntil: () => undefined,
+    passThroughOnException: () => undefined,
+    next: async () => new Response('Not found', { status: 404 })
+  };
+}
 
 function normalizePath(pathname: string): string {
   if (pathname.length > 1 && pathname.endsWith('/')) {
@@ -45,11 +58,11 @@ function normalizePath(pathname: string): string {
   return pathname;
 }
 
-async function dispatch(handler: PagesHandler, request: Request, env: AuthEnv, params: Record<string, string>): Promise<Response> {
-  return handler({ request, env, params });
+async function dispatch(handler: PagesHandler, request: Request, env: WorkerEnv, params: Record<string, string>): Promise<Response> {
+  return handler(createContext(request, env, params));
 }
 
-async function handleApi(request: Request, env: AuthEnv): Promise<Response | null> {
+async function handleApi(request: Request, env: WorkerEnv): Promise<Response | null> {
   const url = new URL(request.url);
   const path = normalizePath(url.pathname);
   const method = request.method.toUpperCase();
