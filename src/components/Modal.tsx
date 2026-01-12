@@ -12,7 +12,14 @@ export function Modal({ open, title, onClose, children }: ModalProps) {
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal" onClick={(event) => event.stopPropagation()}>
-        {title ? <h3>{title}</h3> : null}
+        {title ? (
+          <div className="modal-header">
+            <h3>{title}</h3>
+            <button className="modal-close" type="button" aria-label="Close" onClick={onClose}>
+              ✕
+            </button>
+          </div>
+        ) : null}
         {children}
       </div>
     </div>

@@ -107,9 +107,9 @@ export default function MainDrinkPage() {
   return (
     <Layout title="Drink" mode={summary?.mode}>
       {summary?.mode === 'SAFETY' ? (
-        <Card className="safety">
+        <Card className="safety card-critical">
           <h2>🚨 Безопасность</h2>
-          <p>Не за руль. Сделай паузу.</p>
+          <p className="muted">Не за руль. Сделай паузу.</p>
           <div className="stack">
             <Button full onClick={() => setToast('Вода — лучший выбор')}>💧 Вода/перерыв</Button>
             <Button full variant="danger" onClick={() => window.close()}>Закрыть приложение</Button>
@@ -118,10 +118,23 @@ export default function MainDrinkPage() {
       ) : null}
 
       {summary ? (
-        <Card>
-          <h3>Сегодня</h3>
-          <p className="muted">Промилле: {summary.estimated_promille}‰</p>
-          <p className="muted">{summary.disclaimer}</p>
+        <Card className="summary-card">
+          <div className="summary-top">
+            <h3>Сегодня</h3>
+            <span className={`pill ${summary.mode === 'DRUNK' ? 'pill-warning' : summary.mode === 'SAFETY' ? 'pill-danger' : 'pill-success'}`}>
+              {summary.mode}
+            </span>
+          </div>
+          <div className="summary-stats">
+            <div className="stat-block">
+              <div className="label">Промилле</div>
+              <div className="stat-value">{summary.estimated_promille}‰</div>
+            </div>
+            <div className="stat-block">
+              <div className="label">Сегодня</div>
+              <div className="muted">{summary.disclaimer}</div>
+            </div>
+          </div>
         </Card>
       ) : null}
 
@@ -162,6 +175,7 @@ export default function MainDrinkPage() {
             />
           ))}
         </div>
+        <div className="divider" />
         <Button full variant="secondary" onClick={() => navigate('/crew/suggestions')}>
           Предложить напиток
         </Button>

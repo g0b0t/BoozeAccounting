@@ -80,8 +80,13 @@ export default function SuggestionsPage() {
           <h3>Pending</h3>
           <ul className="list">
             {suggestions.map((item) => (
-              <li key={item.suggestion_id}>
-                {item.emoji} {item.name} ({item.abv}%)
+              <li key={item.suggestion_id} className="list-item">
+                <div className="list-item-text">
+                  <strong>
+                    {item.emoji} {item.name}
+                  </strong>
+                  <span className="muted">{item.abv}% · {item.serving_label}</span>
+                </div>
                 <div className="row">
                   <Button variant="secondary" onClick={() => approve(item.suggestion_id)}>
                     Approve

@@ -5,7 +5,9 @@ export function Layout({ title, children, mode }: { title?: string; children: Re
   return (
     <div className={`app ${mode ? `mode-${mode.toLowerCase()}` : ''}`}>
       <header className="topbar">
-        <h1>{title ?? 'Booze Crew'}</h1>
+        <div className="topbar-inner">
+          <h1 className="topbar-title">{title ?? 'Booze Crew'}</h1>
+        </div>
       </header>
       <main className="content">{children}</main>
       {mode !== 'SAFETY' ? <BottomTabs /> : null}

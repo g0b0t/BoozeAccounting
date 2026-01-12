@@ -23,4 +23,9 @@ export function applyTelegramTheme() {
   if (theme.hint_color) root.style.setProperty('--muted', theme.hint_color);
   if (theme.button_color) root.style.setProperty('--accent', theme.button_color);
   if (theme.button_text_color) root.style.setProperty('--accent-contrast', theme.button_text_color);
+  if (theme.secondary_bg_color) {
+    root.style.setProperty('--surface', theme.secondary_bg_color);
+    root.style.setProperty('--surface-2', theme.secondary_bg_color);
+  }
+  if (theme.hint_color) root.style.setProperty('--border', theme.hint_color);
 }

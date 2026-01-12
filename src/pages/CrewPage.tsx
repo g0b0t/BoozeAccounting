@@ -6,6 +6,7 @@ import { useAuth } from '../lib/store';
 import { ApiClient } from '../lib/api';
 import type { Crew, CrewMember } from '@shared/types';
 import { useNavigate } from 'react-router-dom';
+import { AvatarRow } from '../components/AvatarRow';
 
 export default function CrewPage() {
   const { initData, activeCrewId, crews } = useAuth();
@@ -39,18 +40,28 @@ export default function CrewPage() {
     <Layout title="Crew">
       <Card>
         <h3>{crew?.name}</h3>
-        <p>Invite code: {crew?.invite_code}</p>
-        <Button variant="secondary" onClick={copyInvite}>
-          Скопировать
-        </Button>
+        <div className="stack">
+          <div className="invite-block">
+            <span>{crew?.invite_code}</span>
+            <Button variant="secondary" onClick={copyInvite}>
+              Скопировать
+            </Button>
+          </div>
+          <p className="muted">Отправьте код другу, чтобы он присоединился.</p>
+        </div>
       </Card>
 
       <Card>
         <h3>Участники</h3>
+        <AvatarRow users={members.map((member) => ({ id: member.user_id, name: member.user_id }))} />
         <ul className="list">
           {members.map((member) => (
-            <li key={member.user_id}>
-              {member.user_id} — {member.role}
+            <li key={member.user_id} className="list-item">
+              <div className="list-item-text">
+                <strong>{member.user_id}</strong>
+                <span className="muted">{member.role}</span>
+              </div>
+              <span>👤</span>
             </li>
           ))}
         </ul>
@@ -59,12 +70,14 @@ export default function CrewPage() {
       {role === 'ADMIN' ? (
         <Card>
           <h3>Админ</h3>
-          <Button full onClick={() => navigate('/crew/products')}>
-            Управление напитками
-          </Button>
-          <Button full variant="secondary" onClick={() => navigate('/crew/suggestions')}>
-            Предложения
-          </Button>
+          <div className="stack">
+            <Button full onClick={() => navigate('/crew/products')}>
+              Управление напитками
+            </Button>
+            <Button full variant="secondary" onClick={() => navigate('/crew/suggestions')}>
+              Предложения
+            </Button>
+          </div>
         </Card>
       ) : null}
     </Layout>
