@@ -40,6 +40,11 @@ export default function ProfilePage() {
       <Card>
         <h2>Профиль {step + 1}/4</h2>
         <p className="muted">Нужно для расчёта промилле.</p>
+        <div className="profile-progress">
+          {steps.map((_, index) => (
+            <span key={steps[index]} className={`profile-dot ${index <= step ? 'active' : ''}`} />
+          ))}
+        </div>
         <div className="profile-step">
           <h3>{steps[step]}</h3>
           {step === 0 ? (

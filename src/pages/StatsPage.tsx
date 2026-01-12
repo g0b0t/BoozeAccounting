@@ -59,8 +59,16 @@ export default function StatsPage() {
     <Layout title="Stats" mode={summary?.mode}>
       <Card>
         <h3>Сегодня</h3>
-        <p>Промилле: {summary?.estimated_promille ?? 0}‰</p>
-        <p className="muted">{summary?.disclaimer}</p>
+        <div className="summary-stats">
+          <div className="stat-block">
+            <div className="label">Промилле</div>
+            <div className="stat-value">{summary?.estimated_promille ?? 0}‰</div>
+          </div>
+          <div className="stat-block">
+            <div className="label">Дисклеймер</div>
+            <div className="muted">{summary?.disclaimer}</div>
+          </div>
+        </div>
       </Card>
 
       <Card>
@@ -68,8 +76,12 @@ export default function StatsPage() {
         {leaderboard.length === 0 ? <p className="muted">Сегодня все святые.</p> : null}
         <ul className="list">
           {leaderboard.map(([userId, stats]) => (
-            <li key={userId}>
-              <strong>{userId}</strong> — {stats.liters.toFixed(2)} л / {stats.ethanol.toFixed(1)} г
+            <li key={userId} className="list-item">
+              <div className="list-item-text">
+                <strong>{userId}</strong>
+                <span className="muted">{stats.liters.toFixed(2)} л</span>
+              </div>
+              <span>{stats.ethanol.toFixed(1)} г</span>
             </li>
           ))}
         </ul>
@@ -79,13 +91,19 @@ export default function StatsPage() {
         <h3>Год назад ({onThisDay?.date})</h3>
         {onThisDay && onThisDay.top.length > 0 ? (
           <div>
-            <p>
-              Всего: {onThisDay.total_liters} л / {onThisDay.total_ethanol_grams} г этанола
-            </p>
+            <div className="stat-block">
+              <div className="label">Всего</div>
+              <div className="muted">
+                {onThisDay.total_liters} л / {onThisDay.total_ethanol_grams} г этанола
+              </div>
+            </div>
             <ul className="list">
               {onThisDay.top.map((item) => (
-                <li key={item.product.product_id}>
-                  {item.product.emoji} {item.product.name} — {item.liters.toFixed(2)} л
+                <li key={item.product.product_id} className="list-item">
+                  <span>
+                    {item.product.emoji} {item.product.name}
+                  </span>
+                  <span className="muted">{item.liters.toFixed(2)} л</span>
                 </li>
               ))}
             </ul>

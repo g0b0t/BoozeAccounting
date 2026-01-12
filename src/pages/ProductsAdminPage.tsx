@@ -91,10 +91,15 @@ export default function ProductsAdminPage() {
         <h3>Каталог</h3>
         <ul className="list">
           {products.map((product) => (
-            <li key={product.product_id}>
-              {product.emoji} {product.name} ({product.abv}%)
+            <li key={product.product_id} className="list-item">
+              <div className="list-item-text">
+                <strong>
+                  {product.emoji} {product.name}
+                </strong>
+                <span className="muted">{product.abv}% · {product.serving_label}</span>
+              </div>
               {product.is_archived ? (
-                <span className="muted"> архив</span>
+                <span className="muted">архив</span>
               ) : (
                 <Button variant="ghost" onClick={() => archive(product.product_id)}>
                   Архивировать
